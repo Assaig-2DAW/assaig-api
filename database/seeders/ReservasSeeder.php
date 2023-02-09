@@ -19,6 +19,14 @@ class ReservasSeeder extends Seeder
      */
     public function run()
     {
+        $fechas = Fecha::all();
+        $fechas->each(function($fecha) {
+            Reserva::factory()->count(3)->create([
+                'fecha_id' => $fecha->id,
+            ]);
+        });
+
+
 
 
     }

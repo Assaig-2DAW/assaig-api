@@ -24,5 +24,11 @@ class DatabaseSeeder extends Seeder
         $this->call(UsersSeeder::class);
         $this->call(ProfesoresSeeder::class);
         $this->call(FechasSeeder::class);
+        $this->call(ReservasSeeder::class);
+        $this->call(ProfesorFechasSalaSeeder::class);
+        $this->call(ProfesorFechasCocinaSeeder::class);
+        $this->call(AlergenosSeeder::class);
+        $this->call(AlergenoReservasSeeder::class);
+        $this->call(SuscriptorSeeder::class);
     }
 }

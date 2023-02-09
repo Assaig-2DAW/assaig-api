@@ -43,7 +43,6 @@ class FechaFactory extends Factory
             'horario_apertura' => $openTime,
             'horario_cierre' => $closeTime,
             'user_id' => User::inRandomOrder()->first()->id,
-
         ];
     }
 }

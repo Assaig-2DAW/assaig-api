@@ -13,8 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('alergeno_reserva', function (Blueprint $table) {
+        Schema::create('alergeno__reservas', function (Blueprint $table) {
             $table->id();
+            $table->timestamps();
 
             $table->unsignedBigInteger('reserva_id');
             $table->unsignedBigInteger('alergeno_id');

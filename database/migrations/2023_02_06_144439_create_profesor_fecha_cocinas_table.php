@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('profesor_fecha_cocina', function (Blueprint $table) {
+        Schema::create('profesor_fecha_cocinas', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('fecha_id');
             $table->foreign('fecha_id')->references('id')->on('fechas')->onDelete('cascade');
