@@ -54,7 +54,7 @@ class ProfesorController extends Controller
      * @param  \App\Models\Profesor  $profesor
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, Profesor $profesore)
+    public function update(ProfesorRequest $request, Profesor $profesore)
     {
         $profesore = Profesor::findOrFail($profesore->id);
         $profesore->nombre = $request->nombre ?? $profesore->nombre;
