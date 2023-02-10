@@ -11,10 +11,10 @@ class Profesor extends Model
 
     public function profesor_fecha_cocinas()
     {
-        return $this->hasMany(Profesor_fecha_cocina::class);
+        return $this->belongsToMany('App\Models\Fecha', 'profesor_fecha_cocinas', 'profesor_id', 'fecha_id')->withPivot('created_at','updated_at');
     }
     public function profesor_fecha_salas()
     {
-        return $this->hasMany(Profesor_fecha_sala::class);
+        return $this->belongsToMany('App\Models\Fecha', 'profesor_fecha_salas', 'profesor_id', 'fecha_id')->withPivot('created_at','updated_at');
     }
 }
