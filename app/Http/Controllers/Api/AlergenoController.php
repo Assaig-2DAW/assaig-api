@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AlergenoRequest;
 use App\Http\Resources\AlergenoResource;
 use App\Models\Alergeno;
 use Illuminate\Http\Request;
@@ -23,9 +24,9 @@ class AlergenoController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request)
+    public function store(AlergenoRequest $request)
     {
         $alergeno = new Alergeno();
         $alergeno->nombre = $request->nombre;
@@ -50,9 +51,9 @@ class AlergenoController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Alergeno  $alergeno
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, Alergeno $alergeno)
+    public function update(AlergenoRequest $request, Alergeno $alergeno)
     {
         $alergeno = Alergeno::findOrFail($alergeno->id);
         $alergeno->nombre = $request->nombre ?? $alergeno->nombre;
@@ -65,7 +66,7 @@ class AlergenoController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Alergeno  $alergeno
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(Alergeno $alergeno)
     {

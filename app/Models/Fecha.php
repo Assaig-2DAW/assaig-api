@@ -16,16 +16,12 @@ class Fecha extends Model
 
     public function profesor_fecha_cocinas()
     {
-        return $this->hasMany(Profesor_fecha_cocina::class);
+        return $this->belongsToMany('App\Models\Profesor', 'profesor_fecha_cocinas', 'fecha_id', 'profesor_id')->withPivot('created_at','updated_at');
     }
 
     public function profesor_fecha_salas()
     {
-        return $this->hasMany(Profesor_fecha_sala::class);
+        return $this->belongsToMany('App\Models\Profesor', 'profesor_fecha_salas', 'fecha_id', 'profesor_id')->withPivot('created_at','updated_at');
     }
 
-    public function fechas()
-    {
-        return $this->hasMany(Fecha::class);
-    }
 }
