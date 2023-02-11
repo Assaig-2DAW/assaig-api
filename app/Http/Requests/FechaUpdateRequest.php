@@ -24,12 +24,12 @@ class FechaUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'fecha' => 'required|date',
-            'pax' => 'required|integer',
-            'overbooking' => 'required|integer',
-            'pax_espera' => 'required|integer',
-            'horario_apertura' => 'required|date_format:H:i',
-            'horario_cierre' => 'required|date_format:H:i',
+            'fecha' => 'date',
+            'pax' => 'integer',
+            'overbooking' => 'integer',
+            'pax_espera' => 'integer',
+            'horario_apertura' => 'date_format:H:i',
+            'horario_cierre' => 'date_format:H:i',
             'profesores_sala' => 'exists:profesors,id',
             'profesores_cocina' => 'exists:profesors,id'
         ];

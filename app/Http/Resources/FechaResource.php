@@ -2,9 +2,9 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Fecha;
 use App\Models\Profesor;
-use App\Models\Profesor_fecha_cocina;
-use App\Models\Profesor_fecha_sala;
+
 use App\Models\User;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -18,17 +18,18 @@ class FechaResource extends JsonResource
      */
     public function toArray($request)
     {
-
-        $user = User::findOrFail($this->user_id);
-        $profesores_fecha_sala = Profesor_fecha_sala::where('fecha_id', $this->id)->get();
+        $fecha = Fecha::findOrFail($this->id);
+        $user = $fecha->user()->get();
+        $profesores_fecha_sala = $fecha->profesor_fecha_salas;
+        //dd($profesores_fecha_sala);
         $profesores_sala = [];
         foreach ($profesores_fecha_sala as $profesor_fecha) {
-            $profesores_sala[] = Profesor::findOrFail($profesor_fecha->profesor_id);
+            $profesores_sala[] = Profesor::findOrFail($profesor_fecha->id);
         }
-        $profesores_fecha_cocina = Profesor_fecha_cocina::where('fecha_id', $this->id)->get();
+        $profesores_fecha_cocina = $fecha->profesor_fecha_cocinas;
         $profesores_cocina = [];
         foreach ($profesores_fecha_cocina as $profesor_fecha) {
-            $profesores_cocina[] = Profesor::findOrFail($profesor_fecha->profesor_id);
+            $profesores_cocina[] = Profesor::findOrFail($profesor_fecha->id);
         }
 
         return [

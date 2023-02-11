@@ -5,20 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1c17c6e9-0b84-4609-adce-50f64c44c340" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/app/Http/Requests/ReservaRequest.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Resources/ReservaResource.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/AlergenoController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/AlergenoController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/FechaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/FechaController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Alergeno.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Alergeno.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Alergeno_Reserva.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Alergeno_Reserva.php.bak" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Fecha.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Fecha.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Profesor.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Profesor.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Profesor_fecha_cocina.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Profesor_fecha_cocina.php.bak" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Profesor_fecha_sala.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Profesor_fecha_sala.php.bak" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Reserva.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Reserva.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/seeders/DatabaseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeders/DatabaseSeeder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/seeders/FechasSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeders/FechasSeeder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/seeders/ReservasSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeders/ReservasSeeder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/FechaUpdateRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/FechaUpdateRequest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Resources/FechaResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/FechaResource.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/storage/logs/laravel.log" beforeDir="false" afterPath="$PROJECT_DIR$/storage/logs/laravel.log" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -204,6 +195,7 @@
       <workItem from="1676023936518" duration="7339000" />
       <workItem from="1676040659918" duration="4314000" />
       <workItem from="1676045622195" duration="5821000" />
+      <workItem from="1676114067439" duration="3223000" />
     </task>
     <servers />
   </component>
