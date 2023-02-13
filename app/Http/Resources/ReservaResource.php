@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Reserva;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ReservaResource extends JsonResource
@@ -14,6 +15,17 @@ class ReservaResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        $alergenos = $this->alergeno_reservas;
+        return [
+            'id' => $this->id,
+            'nombre' => $this->nombre,
+            'email' => $this->email,
+            'telefono' => $this->telefono,
+            'comensales' => $this->comensales,
+            'observaciones' => $this->observaciones,
+            'localizador' => $this->localizador,
+            'confirmada' => $this->confirmada,
+            'alergenos' => $alergenos,
+        ];
     }
 }

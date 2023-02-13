@@ -51,7 +51,7 @@ class FechaController extends Controller
         foreach ($request->profesores_cocina as $profesor) {
             $fecha->profesor_fecha_cocinas()->attach(intval($profesor));
         }
-        return response()->json($fecha, 201);
+        return response()->json(new FechaResource($fecha), 201);
 
 
 
@@ -77,18 +77,29 @@ class FechaController extends Controller
      */
     public function update(FechaUpdateRequest $request, Fecha $fecha)
     {
-        $fecha = Fecha::findOrFail($fecha->id);
-        $fecha->fecha = $request->fecha ?? $fecha->fecha;
-        $fecha->pax = $request->pax ?? $fecha->pax;
-        $fecha->overbooking = $request->overbooking ?? $fecha->overbooking;
-        $fecha->pax_espera = $request->pax_espera ?? $fecha->pax_espera;
-        $fecha->horario_apertura = $request->horario_apertura ?? $fecha->horario_apertura;
-        $fecha->horario_cierre = $request->horario_cierre ?? $fecha->horario_cierre;
-        $fecha->user_id =  Auth::id();
-        $fecha->save();
-        //Falta guardar los profesores
+        $fechaUpdate = Fecha::findOrFail($fecha->id);
 
-        return response()->json($fecha, 201);
+        if(!isset($request->fecha->fecha)) {
+            $fechaUpdate->fecha = $request->fecha;
+        }
+        $fechaUpdate->pax = $request->pax ?? $fecha->pax;
+        $fechaUpdate->overbooking = $request->overbooking ?? $fecha->overbooking;
+        $fechaUpdate->pax_espera = $request->pax_espera ?? $fecha->pax_espera;
+        $fechaUpdate->horario_apertura = $request->horario_apertura ?? $fecha->horario_apertura;
+        $fechaUpdate->horario_cierre = $request->horario_cierre ?? $fecha->horario_cierre;
+        $fechaUpdate->user_id =  Auth::id();
+        $fechaUpdate->save();
+        if($request->profesores_sala) {
+            foreach ($request->profesores_sala as $profesor) {
+                $fechaUpdate->profesor_fecha_salas()->attach(intval($profesor));
+            }
+        }
+        if($request->profesores_cocina) {
+            foreach ($request->profesores_cocina as $profesor) {
+                $fechaUpdate->profesor_fecha_cocinas()->attach(intval($profesor));
+            }
+        }
+        return response()->json(new FechaResource($fechaUpdate), 201);
     }
 
     /**
