@@ -6,10 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="1c17c6e9-0b84-4609-adce-50f64c44c340" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/ReservaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/ReservaController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/deploy.php" beforeDir="false" afterPath="$PROJECT_DIR$/deploy.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/seeders/UsersSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeders/UsersSeeder.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -197,7 +194,7 @@
       <workItem from="1676114067439" duration="5355000" />
       <workItem from="1676283351249" duration="5059000" />
       <workItem from="1676297184249" duration="6505000" />
-      <workItem from="1676303729774" duration="1299000" />
+      <workItem from="1676303729774" duration="3258000" />
     </task>
     <servers />
   </component>
