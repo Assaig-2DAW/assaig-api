@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('alergeno__reservas', function (Blueprint $table) {
+        Schema::create('alergeno_reservas', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
 
