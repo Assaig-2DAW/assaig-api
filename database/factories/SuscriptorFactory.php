@@ -17,10 +17,10 @@ class SuscriptorFactory extends Factory
     public function definition()
     {
         return [
-            'nombre' => 'admin',
-            'email' => 'admin@admin.com',
-            'cancelado' => false,
-            'fecha_baja' => '2055-12-31'
+            'nombre' => fake()->name(),
+            'email' => fake()->email(),
+            'cancelado' => fake()->boolean(),
+            'fecha_baja' => fake()->dateTime()
         ];
     }
 }

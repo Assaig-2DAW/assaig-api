@@ -22,7 +22,7 @@ add('writable_dirs', []);
 
 // Hosts
 // De momento se debe cambiar el host con el DNS del servidor PHP cada vez que éste cambie
-host('ec2-52-23-245-42.compute-1.amazonaws.com')
+host('ec2-52-72-78-98.compute-1.amazonaws.com')
     ->user('api_dev')
     ->identityFile('~/.ssh/id_rsa.pub')
     ->set('deploy_path', '/var/www/assaig-api/html');
@@ -46,8 +46,10 @@ after('deploy:failed', 'deploy:unlock');
 
 before('deploy:symlink', 'artisan:migrate');
 
-
-
+/*
+task('composer:update', function(){
+    run('composer --working-dir=/var/www/assaig-api/html/release update');
+});*/
 
 
 task('reload:php-fpm', function(){
@@ -59,8 +61,12 @@ task('rsync_function', function (){
     run('rsync -avz -e "ssh -i /home/api_dev/.ssh/nginx" --include="*.html" --include="*.css" --include="*.jpg" --include="*.jpeg" --include="*.png" --exclude="*" /var/www/assaig-api/html api_dev@54.85.146.153:/var/www/assaig-api/');
 });
 
-after('deploy', 'artisan:db:seed');
+
+/*
+after('deploy:vendors','composer:update'); */
 
 after('deploy', 'reload:php-fpm');
+
+after('deploy', 'artisan:db:seed');
 
 after('deploy', 'rsync_function');
