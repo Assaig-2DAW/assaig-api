@@ -83,8 +83,6 @@ class ReservaController extends Controller
                 $reservaUpdate->alergeno_reservas()->attach(intval($alergeno));
             }
         }
-
-
         return response()->json(new ReservaResource($reservaUpdate), 201);
 
     }

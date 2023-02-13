@@ -5,14 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1c17c6e9-0b84-4609-adce-50f64c44c340" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/app/Http/Requests/ReservaStoreRequest.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/FechaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/FechaController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/ReservaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/ReservaController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/ReservaRequest.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Resources/FechaResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/FechaResource.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Resources/ReservaResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/ReservaResource.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/storage/logs/laravel.log" beforeDir="false" afterPath="$PROJECT_DIR$/storage/logs/laravel.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/deploy.php" beforeDir="false" afterPath="$PROJECT_DIR$/deploy.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -162,7 +159,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/batoi/Escritorio/2-DAW/PROY-INT/php/assaig-api/app&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/batoi/Escritorio/2-DAW/PROY-INT/php/assaig-api&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
@@ -172,11 +169,11 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/app" />
       <recent name="$PROJECT_DIR$/resources/views/layout" />
       <recent name="$PROJECT_DIR$/routes" />
       <recent name="$PROJECT_DIR$/resources/views" />
-      <recent name="$PROJECT_DIR$/app/Http/Controllers" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -199,7 +196,8 @@
       <workItem from="1676045622195" duration="5821000" />
       <workItem from="1676114067439" duration="5355000" />
       <workItem from="1676283351249" duration="5059000" />
-      <workItem from="1676297184249" duration="2405000" />
+      <workItem from="1676297184249" duration="6505000" />
+      <workItem from="1676303729774" duration="1299000" />
     </task>
     <servers />
   </component>
