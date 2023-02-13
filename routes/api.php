@@ -26,6 +26,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::apiResource('reservas',ReservaController::class);
 Route::apiResource('fechas',FechaController::class)->middleware('auth:sanctum');
-Route::apiResource('profesores',ProfesorController::class);
-Route::apiResource('alergenos',AlergenoController::class);
+Route::apiResource('profesores',ProfesorController::class)->middleware('auth:sanctum');
+Route::apiResource('alergenos',AlergenoController::class)->middleware('auth:sanctum');
 Route::post('login', [LoginController::class,'login']);
