@@ -15,6 +15,6 @@ class Reserva extends Model
 
     public function alergeno_reservas()
     {
-        return $this->hasMany(Alergeno_Reserva::class);
+        return $this->belongsToMany('App\Models\Alergeno', 'alergeno_reservas', 'reserva_id', 'alergeno_id')->withPivot('created_at','updated_at');
     }
 }

@@ -17,8 +17,8 @@ class AlergenoFactory extends Factory
     public function definition()
     {
         return [
-            'nombre'=> fake()->name(),
-            'icono' => fake()->numberBetween(0, 100),
+            'nombre'=> fake()->word(),
+            'icono' => fake()->unique()->numberBetween(0, 100),
         ];
     }
 }

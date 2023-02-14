@@ -19,7 +19,19 @@ class ReservasSeeder extends Seeder
      */
     public function run()
     {
-
-
+        $fechas = Fecha::all();
+        $fechas->each(function($fecha) {
+            Reserva::factory()->count(3)->create([
+                'fecha_id' => $fecha->id,
+            ]);
+        });
+        $alergenos =Alergeno::all();
+        $reservas = Reserva::all();
+        foreach ($reservas as $reserva) {
+            $random = random_int(0, count($alergenos));
+            for($i=0; $i<$random; $i++){
+                $reserva->alergeno_reservas()->attach($alergenos[$i]->id);
+            }
+        }
     }
 }
