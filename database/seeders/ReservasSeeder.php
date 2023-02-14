@@ -25,12 +25,11 @@ class ReservasSeeder extends Seeder
                 'fecha_id' => $fecha->id,
             ]);
         });
-        $alergenos =Alergeno::all()->toArray();
         $reservas = Reserva::all();
         foreach ($reservas as $reserva) {
-            $random = random_int(0, count($alergenos));
+            $random = random_int(0, 13);
             for($i=0; $i<$random; $i++){
-                $reserva->alergeno_reservas()->attach($alergenos[$i]->id);
+                $reserva->alergeno_reservas()->attach($i+1);
             }
         }
     }
