@@ -18,7 +18,7 @@ class ReservaController extends Controller
      */
     public function index()
     {
-        return ReservaResource::collection(Reserva::paginate(10));
+        return ReservaResource::collection(Reserva::all());
     }
 
     /**
