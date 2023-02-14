@@ -21,9 +21,9 @@ add('writable_dirs', []);
 
 
 // Hosts
-
-host('100.25.202.163')
-    ->user('deployer')
+// De momento se debe cambiar el host con el DNS del servidor PHP cada vez que éste cambie
+host('ec2-52-72-78-98.compute-1.amazonaws.com')
+    ->user('api_dev')
     ->identityFile('~/.ssh/id_rsa.pub')
     ->set('deploy_path', '/var/www/assaig-api/html');
 
@@ -36,20 +36,25 @@ task('build', function () {
 // [Optional] if deploy fails automatically unlock.
 after('deploy:failed', 'deploy:unlock');
 
+// Crea automáticamente el fichero .env en el servidor
+/*task('upload:env', function () {
+    upload('.env.develop', '{{deploy_path}}/shared/.env');
+})->desc('Environment setup');
+*/
 // Migrate database before symlink new release.
 
-/*before('deploy:symlink', 'artisan:migrate');
+before('deploy:symlink', 'artisan:migrate');
+before('deploy:symlink', 'artisan:db:seed');
+
 
 task('reload:php-fpm', function(){
     run('sudo /etc/init.d/php8.1-fpm restart');
 });
 
-after('deploy', 'reload:php-fpm');
-
-task('reload:php-fpm', function(){
-    run('sudo /etc/init.d/php8.1-fpm restart');
+task('rsync_function', function (){
+    run('rsync -avz -e "ssh -i /home/api_dev/.ssh/nginx" --include="*.html" --include="*.css" --include="*.jpg" --include="*.jpeg" --include="*.png" --exclude="*" /var/www/assaig-api/html api_dev@54.85.146.153:/var/www/assaig-api/');
 });
 
 after('deploy', 'reload:php-fpm');
-*/
-//rsync -avz -e ssh /ruta/del/proyecto usuario@ip_del_servidor_destino:/ruta/del/destino
+
+after('deploy', 'rsync_function');
