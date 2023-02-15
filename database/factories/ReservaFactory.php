@@ -24,7 +24,8 @@ class ReservaFactory extends Factory
             'observaciones' => fake()->sentence(2),
             'localizador' => fake()->unique()->lexify('?????'),
             'confirmada' => fake()->boolean(),
-
+            'en_espera' => fake()->boolean(),
+            'verify' => fake()->boolean(),
         ];
     }
 }

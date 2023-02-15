@@ -31,29 +31,25 @@ class ReservaController extends Controller
     public function store(ReservaStoreRequest $request)
     {
         $fecha = Fecha::findOrFail($request->fecha_id);
-        $reservas = $fecha->reservas;
-        $plazasOcupadas = 0;
-        $plazasEspera = 0;
-        foreach ($reservas as $item) {
-            if(!$item->en_espera) {
-                $plazasOcupadas += $item->comensales;
-            } else {
-                $plazasEspera++;
-            }
-        }
         $reserva = new Reserva();
         $reserva->nombre = $request->nombre;
         $reserva->email = $request->email;
         $reserva->telefono = $request->telefono;
         $reserva->comensales = $request->comensales;
         $reserva->confirmada = false;
-        $reserva->localizador = "AAAAC";
+        $reserva->localizador = "AAAAX";
         $reserva->observaciones = $request->observaciones;
         $reserva->fecha_id = $request->fecha_id;
-        if(($plazasOcupadas + $request->comensales) <= ($fecha->pax + $fecha->overbooking)) {
+        $reserva->verify = false;
+        if(($fecha->pax + $fecha->overbooking) >= $request->comensales ) {
             $reserva->en_espera = false;
-        } elseif($plazasEspera < $fecha->pax_espera) {
+            $fecha->pax -= $reserva->comensales;
+            $fecha->save();
+        } elseif($fecha->pax_espera > 0) {
             $reserva->en_espera = true;
+            $fecha->pax_espera--;
+            $fecha->save();
+
         } else {
             return response("No se ha podido añadir la reserva");
         }
@@ -114,6 +110,13 @@ class ReservaController extends Controller
     {
         $reserva->delete();
         return response()->json(null, 204);
+    }
+
+    public function confirmar(int $id) {
+        $reserva = Reserva::findOrFail($id);
+        $reserva->confirmada = true;
+        $reserva->save();
+        return true;
     }
 
 }

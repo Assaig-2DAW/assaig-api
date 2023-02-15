@@ -41,7 +41,7 @@ class FechaController extends Controller
         $fecha->pax_espera = $request->pax_espera;
         $fecha->horario_apertura = $request->horario_apertura;
         $fecha->horario_cierre = $request->horario_cierre;
-        $fecha->user_id =  Auth::id();
+        $fecha->user_id =  1;
         $fecha->save();
 
         foreach ($request->profesores_sala as $profesor) {
