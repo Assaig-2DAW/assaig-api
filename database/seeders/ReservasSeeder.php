@@ -21,13 +21,13 @@ class ReservasSeeder extends Seeder
     {
         $fechas = Fecha::all();
         $fechas->each(function($fecha) {
-            Reserva::factory()->count(2)->create([
+            Reserva::factory()->count(5)->create([
                 'fecha_id' => $fecha->id,
             ]);
         });
         $reservas = Reserva::all();
         foreach ($reservas as $reserva) {
-            $random = random_int(0, 8);
+            $random = random_int(0, 14);
             for($i=1; $i<=$random; $i++){
                 $reserva->alergeno_reservas()->attach($i);
             }

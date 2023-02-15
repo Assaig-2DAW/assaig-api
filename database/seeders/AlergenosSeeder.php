@@ -15,6 +15,6 @@ class AlergenosSeeder extends Seeder
      */
     public function run()
     {
-        Alergeno::factory(8)->create();
+        Alergeno::factory(14)->create();
     }
 }

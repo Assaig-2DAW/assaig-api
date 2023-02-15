@@ -48,7 +48,7 @@ before('deploy:symlink', 'artisan:migrate');
 task('composer:update', function (){
     run('cd /var/www/assaig-api/html/current && sudo apt install php8.1-intl');
     run('cd /var/www/assaig-api/html/current && composer update');
-    run('cd /var/www/assaig-api/html/current && php artisan db:seed');
+    run('cd /var/www/assaig-api/html/current && php artisan migrate:fresh --seed');
 });
 
 task('reload:php-fpm', function(){
