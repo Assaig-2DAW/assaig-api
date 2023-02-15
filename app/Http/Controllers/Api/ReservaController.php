@@ -31,29 +31,37 @@ class ReservaController extends Controller
     public function store(ReservaStoreRequest $request)
     {
         $fecha = Fecha::findOrFail($request->fecha_id);
-        $reservas = $fecha->reservas();
+        $reservas = $fecha->reservas;
         $plazasOcupadas = 0;
+        $plazasEspera = 0;
         foreach ($reservas as $item) {
-            $plazasOcupadas += $item->comensales;
+            if(!$item->en_espera) {
+                $plazasOcupadas += $item->comensales;
+            } else {
+                $plazasEspera++;
+            }
         }
         $reserva = new Reserva();
+        $reserva->nombre = $request->nombre;
+        $reserva->email = $request->email;
+        $reserva->telefono = $request->telefono;
+        $reserva->comensales = $request->comensales;
+        $reserva->confirmada = false;
+        $reserva->localizador = "AAAAC";
+        $reserva->observaciones = $request->observaciones;
+        $reserva->fecha_id = $request->fecha_id;
         if(($plazasOcupadas + $request->comensales) <= ($fecha->pax + $fecha->overbooking)) {
-            $reserva->nombre = $request->nombre;
-            $reserva->email = $request->email;
-            $reserva->telefono = $request->telefono;
-            $reserva->comensales = $request->comensales;
-            $reserva->confirmada = false;
-            $reserva->localizador = "AAAAD";
-            $reserva->observaciones = $request->observaciones;
-            $reserva->fecha_id = $request->fecha_id;
-            $reserva->save();
+            $reserva->en_espera = false;
+        } elseif($plazasEspera < $fecha->pax_espera) {
+            $reserva->en_espera = true;
+        } else {
+            return response("No se ha podido añadir la reserva");
         }
-
+        $reserva->save();
         foreach ($request->alergenos as $alergeno) {
             $reserva->alergeno_reservas()->attach(intval($alergeno));
         }
         return response()->json(new ReservaResource($reserva), 201);
-
     }
 
     /**

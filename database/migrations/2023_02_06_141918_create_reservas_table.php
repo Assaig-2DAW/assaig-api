@@ -22,6 +22,7 @@ return new class extends Migration
             $table->text('observaciones')->nullable();
             $table->string('localizador', 5)->unique();
             $table->boolean('confirmada')->default(0);
+            $table->boolean('en_espera')->default(0);
             $table->timestamps();
         });
     }
