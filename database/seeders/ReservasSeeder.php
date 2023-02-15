@@ -21,7 +21,7 @@ class ReservasSeeder extends Seeder
     {
         $fechas = Fecha::all();
         $fechas->each(function($fecha) {
-            Reserva::factory()->count(5)->create([
+            Reserva::factory()->count(2)->create([
                 'fecha_id' => $fecha->id,
             ]);
         });

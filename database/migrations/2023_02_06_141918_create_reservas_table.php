@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('localizador', 5)->unique();
             $table->boolean('confirmada')->default(0);
             $table->boolean('en_espera')->default(0);
+            $table->boolean('verify')->default(0);
             $table->timestamps();
         });
     }
