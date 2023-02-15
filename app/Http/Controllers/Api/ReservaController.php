@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ReservaStoreRequest;
 use App\Http\Requests\ReservaUpdateRequest;
 use App\Http\Resources\ReservaResource;
+use App\Models\Fecha;
 use App\Models\Reserva;
 use Illuminate\Http\Request;
 
@@ -29,16 +30,24 @@ class ReservaController extends Controller
      */
     public function store(ReservaStoreRequest $request)
     {
+        $fecha = Fecha::findOrFail($request->fecha_id);
+        $reservas = $fecha->reservas();
+        $plazasOcupadas = 0;
+        foreach ($reservas as $item) {
+            $plazasOcupadas += $item->comensales;
+        }
         $reserva = new Reserva();
-        $reserva->nombre = $request->nombre;
-        $reserva->email = $request->email;
-        $reserva->telefono = $request->telefono;
-        $reserva->comensales = $request->comensales;
-        $reserva->confirmada = false;
-        $reserva->localizador = "AAAAD";
-        $reserva->observaciones = $request->observaciones;
-        $reserva->fecha_id = $request->fecha_id;
-        $reserva->save();
+        if(($plazasOcupadas + $request->comensales) <= ($fecha->pax + $fecha->overbooking)) {
+            $reserva->nombre = $request->nombre;
+            $reserva->email = $request->email;
+            $reserva->telefono = $request->telefono;
+            $reserva->comensales = $request->comensales;
+            $reserva->confirmada = false;
+            $reserva->localizador = "AAAAD";
+            $reserva->observaciones = $request->observaciones;
+            $reserva->fecha_id = $request->fecha_id;
+            $reserva->save();
+        }
 
         foreach ($request->alergenos as $alergeno) {
             $reserva->alergeno_reservas()->attach(intval($alergeno));
@@ -98,4 +107,5 @@ class ReservaController extends Controller
         $reserva->delete();
         return response()->json(null, 204);
     }
+
 }

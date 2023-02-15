@@ -24,4 +24,9 @@ class Fecha extends Model
         return $this->belongsToMany('App\Models\Profesor', 'profesor_fecha_salas', 'fecha_id', 'profesor_id')->withPivot('created_at','updated_at');
     }
 
+    public function reservas()
+    {
+        return $this->hasMany(Reserva::class);
+    }
+
 }
