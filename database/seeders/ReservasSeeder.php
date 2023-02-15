@@ -27,9 +27,9 @@ class ReservasSeeder extends Seeder
         });
         $reservas = Reserva::all();
         foreach ($reservas as $reserva) {
-            $random = random_int(0, 13);
-            for($i=0; $i<$random; $i++){
-                $reserva->alergeno_reservas()->attach($i+1);
+            $random = random_int(0, 8);
+            for($i=1; $i<=$random; $i++){
+                $reserva->alergeno_reservas()->attach($i);
             }
         }
     }

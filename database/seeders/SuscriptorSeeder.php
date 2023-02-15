@@ -15,6 +15,6 @@ class SuscriptorSeeder extends Seeder
      */
     public function run()
     {
-        Suscriptor::factory(10)->create();
+        Suscriptor::factory(5)->create();
     }
 }

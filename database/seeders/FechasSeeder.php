@@ -17,9 +17,11 @@ class FechasSeeder extends Seeder
      */
     public function run()
     {
+        Fecha::factory(5)->create();
+        /*
         for ($i=1;$i<=10;$i++){
             Fecha::factory(1)->create();
-            /**
+
             $id = $fecha->fecha;
             $fecha = Fecha::findOrFail($id);
             for($i=0; $i < 3; $i++) {
@@ -29,8 +31,8 @@ class FechasSeeder extends Seeder
                 $profesor = Profesor::inRandomOrder()->first();
                 $fecha->profesor_fecha_salas()->attach($profesor->id);
             }
-             * */
         }
+        */
         $fechas = Fecha::all();
         foreach ($fechas as $fecha) {
             $profesors = Profesor::inRandomOrder()->get();
