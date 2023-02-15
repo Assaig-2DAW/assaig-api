@@ -16,6 +16,7 @@ class ReservaResource extends JsonResource
     public function toArray($request)
     {
         $alergenos = $this->alergeno_reservas;
+        $fecha = $this->fecha;
         return [
             'id' => $this->id,
             'nombre' => $this->nombre,
@@ -26,6 +27,7 @@ class ReservaResource extends JsonResource
             'localizador' => $this->localizador,
             'confirmada' => $this->confirmada,
             'alergenos' => $alergenos,
+            'fecha'=> $fecha,
         ];
     }
 }
