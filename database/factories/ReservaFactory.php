@@ -19,7 +19,7 @@ class ReservaFactory extends Factory
         return [
             'nombre'=> fake()->name(),
             'email'=> fake()->unique()->safeEmail(),
-            'telefono'=> fake()->numerify(fake()->randomElement(['6#######', '9#######'])),
+            'telefono'=> fake()->numerify(fake()->randomElement(['6########', '9########'])),
             'comensales'=> fake()->numberBetween(5,7),
             'observaciones' => fake()->sentence(2),
             'localizador' => fake()->unique()->lexify('?????'),
