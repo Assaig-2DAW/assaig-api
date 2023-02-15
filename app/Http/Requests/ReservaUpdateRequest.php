@@ -31,7 +31,7 @@ class ReservaUpdateRequest extends FormRequest
             'comensales' => 'integer|min:1',
             'observaciones' => 'nullable|string',
             'alergenos' => 'distinct:strict|exists:alergenos,id',
-            'fecha_id' => 'required|integer|exists:fechas,id'
+            'fecha_id' => 'required|integer|exists:fechas,id',
         ];
     }
     public function messages()
