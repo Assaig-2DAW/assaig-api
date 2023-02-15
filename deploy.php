@@ -43,12 +43,12 @@ after('deploy:failed', 'deploy:unlock');
 */
 // Migrate database before symlink new release.
 
-before('deploy:symlink', 'artisan:migrate');
+before('deploy:symlink', 'artisan:migrate:fresh');
 
 task('composer:update', function (){
     run('cd /var/www/assaig-api/html/current && sudo apt install php8.1-intl');
     run('cd /var/www/assaig-api/html/current && composer update');
-    run('cd /var/www/assaig-api/html/current && php artisan migrate:fresh --seed');
+    run('cd /var/www/assaig-api/html/current && php artisan db:seed');
 });
 
 task('reload:php-fpm', function(){
