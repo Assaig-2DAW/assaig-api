@@ -32,14 +32,13 @@ class FechasSeeder extends Seeder
         }
         $fechas = Fecha::all();
         foreach ($fechas as $fecha) {
-            $profesors = Profesor::inRandomOrder()->get();
-            for($i=0; $i <4; $i++) {
-                $profesor = $profesors[$i];
-                if($i%2 == 0) {
-                    $fecha->profesor_fecha_cocinas()->attach($profesor->id);
-                } else {
-                    $fecha->profesor_fecha_salas()->attach($profesor->id);
-                }
+            $profesors_sala = Profesor::where('tipo', 'sala')->inRandomOrder()->get();
+            $profesors_cocina = Profesor::where('tipo', 'cocina')->inRandomOrder()->get();
+            for($i=0; $i <2; $i++) {
+                $profesor_sala = $profesors_sala[$i];
+                $profesor_cocina = $profesors_cocina[$i];
+                $fecha->profesor_fecha_cocinas()->attach($profesor_cocina->id);
+                $fecha->profesor_fecha_salas()->attach($profesor_sala->id);
             }
         }
     }
