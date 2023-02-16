@@ -42,7 +42,7 @@ class FechaFactory extends Factory
             'pax_espera' => 0,
             'horario_apertura' => $openTime,
             'horario_cierre' => $closeTime,
-            'user_id' => User::inRandomOrder()->first()->id,
+            //'user_id' => User::inRandomOrder()->first()->id,
         ];
     }
 }
