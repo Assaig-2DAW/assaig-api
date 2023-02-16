@@ -121,8 +121,8 @@ class ReservaController extends Controller
         return true;
     }
 
-    public function reservasConfirmadas() {
-        return ReservaResource::collection(Reserva::where('confirmada', '1')->get());
+    public function reservasPendientes() {
+        return ReservaResource::collection(Reserva::where('confirmada', '0')->get());
     }
 
 }

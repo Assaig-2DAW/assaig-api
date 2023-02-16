@@ -30,5 +30,5 @@ Route::apiResource('profesores',ProfesorController::class);
 Route::apiResource('alergenos',AlergenoController::class);
 Route::post('login', [LoginController::class,'login']);
 Route::get('confirmar-reserva/{id}', [ReservaController::class, 'confirmar']);
-Route::get('reservas-confirmadas', [ReservaController::class, 'reservasConfirmadas']);
+Route::get('reservas-pendientes', [ReservaController::class, 'reservasPendientes']);
 
