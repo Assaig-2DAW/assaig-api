@@ -22,7 +22,7 @@ return new class extends Migration
             $table->time('horario_apertura');
             $table->time('horario_cierre');
             //$table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            //$table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }
