@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProfesorRequest;
+use App\Http\Resources\FechaResource;
 use App\Http\Resources\ProfesorResource;
+use App\Models\Fecha;
 use App\Models\Profesor;
 use Illuminate\Http\Request;
 
@@ -73,5 +75,15 @@ class ProfesorController extends Controller
     {
         $profesore->delete();
         return response()->json(null, 204);
+    }
+
+    public function fechasProfesor(int $id) {
+        $profesor = Profesor::findOrFail($id);
+        if($profesor->tipo === 'sala') {
+            return FechaResource::collection($profesor->profesor_fecha_salas()->get());
+        } else {
+            return FechaResource::collection($profesor->profesor_fecha_cocinas()->get());
+        }
+
     }
 }
