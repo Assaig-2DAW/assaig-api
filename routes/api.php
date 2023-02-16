@@ -31,4 +31,6 @@ Route::apiResource('alergenos',AlergenoController::class);
 Route::post('login', [LoginController::class,'login']);
 Route::get('confirmar-reserva/{id}', [ReservaController::class, 'confirmar']);
 Route::get('reservas-pendientes', [ReservaController::class, 'reservasPendientes']);
+Route::get('reservas-fecha/{fecha_id}', [ReservaController::class, 'reservasFecha']);
+
 

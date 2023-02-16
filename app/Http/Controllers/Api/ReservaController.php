@@ -125,4 +125,8 @@ class ReservaController extends Controller
         return ReservaResource::collection(Reserva::where('confirmada', '0')->get());
     }
 
+    public function reservasFecha(int $fecha_id) {
+        return ReservaResource::collection(Reserva::where('fecha_id', $fecha_id)->get());
+    }
+
 }
