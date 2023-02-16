@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('telefono', 9);
             $table->integer('comensales')->default(1);
             $table->text('observaciones')->nullable();
-            $table->string('localizador', 5)->unique();
+            $table->string('localizador')->unique();
             $table->boolean('confirmada')->default(0);
             $table->boolean('en_espera')->default(0);
             $table->boolean('verify')->default(0);

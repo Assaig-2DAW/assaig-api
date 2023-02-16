@@ -9,6 +9,8 @@ use App\Http\Resources\ReservaResource;
 use App\Models\Fecha;
 use App\Models\Reserva;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class ReservaController extends Controller
 {
@@ -37,7 +39,7 @@ class ReservaController extends Controller
         $reserva->telefono = $request->telefono;
         $reserva->comensales = $request->comensales;
         $reserva->confirmada = false;
-        $reserva->localizador = "AAAAX";
+        $reserva->localizador = Hash::make(Str::random(40));
         $reserva->observaciones = $request->observaciones;
         $reserva->fecha_id = $request->fecha_id;
         $reserva->verify = false;
@@ -51,7 +53,7 @@ class ReservaController extends Controller
             $fecha->save();
 
         } else {
-            return response("No se ha podido añadir la reserva");
+            return response("No hay espacio para guardar la reserva");
         }
         $reserva->save();
         foreach ($request->alergenos as $alergeno) {
@@ -117,6 +119,10 @@ class ReservaController extends Controller
         $reserva->confirmada = true;
         $reserva->save();
         return true;
+    }
+
+    public function reservasConfirmadas() {
+        return ReservaResource::collection(Reserva::where('confirmada', '1')->get());
     }
 
 }

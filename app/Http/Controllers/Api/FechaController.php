@@ -41,7 +41,7 @@ class FechaController extends Controller
         $fecha->pax_espera = $request->pax_espera;
         $fecha->horario_apertura = $request->horario_apertura;
         $fecha->horario_cierre = $request->horario_cierre;
-        $fecha->user_id =  1;
+        //$fecha->user_id =  1;
         $fecha->save();
 
         foreach ($request->profesores_sala as $profesor) {
@@ -87,7 +87,7 @@ class FechaController extends Controller
         $fechaUpdate->pax_espera = $request->pax_espera ?? $fecha->pax_espera;
         $fechaUpdate->horario_apertura = $request->horario_apertura ?? $fecha->horario_apertura;
         $fechaUpdate->horario_cierre = $request->horario_cierre ?? $fecha->horario_cierre;
-        $fechaUpdate->user_id =  Auth::id();
+        //$fechaUpdate->user_id =  Auth::id();
         $fechaUpdate->save();
         if($request->profesores_sala) {
             foreach ($request->profesores_sala as $profesor) {
