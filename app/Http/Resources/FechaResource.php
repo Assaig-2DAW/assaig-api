@@ -19,7 +19,7 @@ class FechaResource extends JsonResource
      */
     public function toArray($request)
     {
-        $user = $this->user()->get();
+        //$user = $this->user()->get();
         $profesores_sala = $this->profesor_fecha_salas;
         $profesores_cocina = $this->profesor_fecha_cocinas;
         return [
@@ -30,7 +30,7 @@ class FechaResource extends JsonResource
             'pax_espera'=>$this->pax_espera,
             'horario_apertura'=>$this->horario_apertura,
             'horario_cierre'=>$this->horario_cierre,
-            'user'=>$user,
+            //'user'=>$user,
             'profesores_cocina'=>$profesores_cocina,
             'profesores_sala'=>$profesores_sala,
 
