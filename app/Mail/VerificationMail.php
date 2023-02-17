@@ -8,6 +8,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Mail\Mailables\Address;
 
 class VerificationMail extends Mailable
 {
@@ -19,10 +20,10 @@ class VerificationMail extends Mailable
      * @return void
      */
 
-    public $reserva;
-    public function __construct(Reserva $reserva)
+    public $token;
+    public function __construct(String $token)
     {
-        $this->reserva = $reserva;
+        $this->token = $token;
     }
 
     /**
@@ -33,7 +34,6 @@ class VerificationMail extends Mailable
     public function envelope()
     {
         return new Envelope(
-            from: new Address('assaig@assaig.com', 'Jeffrey Way'),
             subject: 'Verificar mail',
         );
     }
@@ -47,6 +47,9 @@ class VerificationMail extends Mailable
     {
         return new Content(
             view: 'mail.verificationMail',
+            with: [
+                'localizador' => $this->token
+            ]
         );
     }
 
