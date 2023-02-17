@@ -80,9 +80,9 @@ class ProfesorController extends Controller
     public function fechasProfesor(int $id) {
         $profesor = Profesor::findOrFail($id);
         if($profesor->tipo === 'sala') {
-            return FechaResource::collection($profesor->profesor_fecha_salas()->get());
+            return FechaResource::collection($profesor->profesor_fecha_salas);
         } else {
-            return FechaResource::collection($profesor->profesor_fecha_cocinas()->get());
+            return FechaResource::collection($profesor->profesor_fecha_cocinas);
         }
 
     }
