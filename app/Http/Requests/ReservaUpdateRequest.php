@@ -31,7 +31,7 @@ class ReservaUpdateRequest extends FormRequest
             'comensales' => 'integer|min:1',
             'observaciones' => 'nullable|string',
             'alergenos' => 'distinct:strict|exists:alergenos,id',
-            'fecha_id' => 'required|integer|exists:fechas,id',
+            'fecha_id' => 'integer|exists:fechas,id',
         ];
     }
     public function messages()
@@ -49,7 +49,6 @@ class ReservaUpdateRequest extends FormRequest
             'observaciones.string' => 'Las observaciones deben ser una cadena de texto.',
             'alergenos.distinct' => 'No puedes seleccionar más de una vez un alérgeno',
             'alergenos.exists' => 'El alergeno seleccionado no se puede encontrar',
-            'fecha_id.required' => 'Debes seleccionar una fecha para hacer una reserva',
             'fecha_id.integer' => 'fecha_id debe ser tipo integer',
             'fecha_id.exists' => 'La fecha seleccionada no existe',
         ];

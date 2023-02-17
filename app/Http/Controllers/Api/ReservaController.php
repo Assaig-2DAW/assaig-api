@@ -38,22 +38,33 @@ class ReservaController extends Controller
         $reserva->email = $request->email;
         $reserva->telefono = $request->telefono;
         $reserva->comensales = $request->comensales;
-        $reserva->confirmada = false;
-        $reserva->localizador = Hash::make(Str::random(40));
+        $reserva->localizador = str_replace('/', '-', Hash::make(Str::random(40)));
         $reserva->observaciones = $request->observaciones;
         $reserva->fecha_id = $request->fecha_id;
         $reserva->verify = false;
-        if(($fecha->pax + $fecha->overbooking) >= $request->comensales ) {
-            $reserva->en_espera = false;
-            $fecha->pax -= $reserva->comensales;
-            $fecha->save();
-        } elseif($fecha->pax_espera > 0) {
-            $reserva->en_espera = true;
-            $fecha->pax_espera--;
-            $fecha->save();
 
-        } else {
-            return response("No hay espacio para guardar la reserva");
+        switch ($this->estadoReserva($fecha, $request->comensales)) {
+            case 'aceptada':
+                $reserva->confirmada = true;
+                $reserva->en_espera = false;
+                $fecha->pax -= $reserva->comensales;
+                $fecha->save();
+                break;
+            case 'aceptada en overbooking':
+                $reserva->confirmada = false;
+                $reserva->en_espera = false;
+                $fecha->overbooking = $fecha->pax + $fecha->overbooking - $reserva->comensales;
+                $fecha->pax = 0;
+                $fecha->save();
+                break;
+            case 'en espera':
+                $reserva->confirmada = false;
+                $reserva->en_espera = true;
+                $fecha->pax_espera = $fecha->pax_espera -1;
+                $fecha->save();
+                break;
+            case 'denegada':
+                return response("No hay espacio para guardar la reserva");
         }
         $reserva->save();
         foreach ($request->alergenos as $alergeno) {
@@ -83,16 +94,42 @@ class ReservaController extends Controller
     public function update(ReservaUpdateRequest $request, Reserva $reserva)
     {
         $reservaUpdate = Reserva::findOrFail($reserva->id);
-        $reservaUpdate->nombre = $request->nombre ?? $reserva->nombre;
-        $reservaUpdate->email = $request->email ?? $reserva->email;
-        $reservaUpdate->telefono = $request->telefono ?? $reserva->telefono;
-        $reservaUpdate->comensales = $request->comensales ?? $reserva->comensales;
-        $reservaUpdate->confirmada = $request->confirmada ?? $reserva->confirmada;
-        $reservaUpdate->localizador = $reserva->localizador;
-        $reservaUpdate->observaciones = $request->observaciones ?? $reserva->observaciones;
-        $reservaUpdate->fecha_id = $request->fecha_id ?? $reserva->fecha_id;
+        $fecha = $reservaUpdate->fecha;
+        if(!$reservaUpdate->en_espera) {
+            $fecha->pax += $reservaUpdate->comensales;
+
+        }
+
+        switch ($this->estadoReserva($fecha, $request->comensales)) {
+            case 'aceptada':
+                $reservaUpdate->confirmada = true;
+                $reservaUpdate->en_espera = false;
+                $fecha->pax = $fecha->pax - $request->comensales;
+                $fecha->save();
+                break;
+            case 'aceptada en overbooking':
+                $reservaUpdate->confirmada = true;
+                $reservaUpdate->en_espera = false;
+                $fecha->pax = $fecha->pax - $request->comensales;
+                $fecha->save();
+                break;
+            case 'en espera':
+                $reservaUpdate->confirmada = false;
+                $reservaUpdate->en_espera = true;
+                $fecha->pax_espera = $fecha->pax_espera -1;
+                $fecha->save();
+                break;
+            case 'denegada':
+                return response("No hay espacio para guardar la reserva");
+
+        }
+        $reservaUpdate->nombre = $request->nombre ?? $reservaUpdate->nombre;
+        $reservaUpdate->email = $request->email ?? $reservaUpdate->email;
+        $reservaUpdate->telefono = $request->telefono ?? $reservaUpdate->telefono;
+        $reservaUpdate->comensales = $request->comensales ?? $reservaUpdate->comensales;
+        $reservaUpdate->observaciones = $request->observaciones ?? $reservaUpdate->observaciones;
         $reservaUpdate->save();
-        $reserva->alergeno_reservas()->detach();
+        $reservaUpdate->alergeno_reservas()->detach();
         if($request->alergenos) {
             foreach ($request->alergenos as $alergeno) {
                 $reservaUpdate->alergeno_reservas()->attach(intval($alergeno));
@@ -110,6 +147,12 @@ class ReservaController extends Controller
      */
     public function destroy(Reserva $reserva)
     {
+        $reserva = Reserva::findOrFail($reserva->id);
+        if(!$reserva->en_espera) {
+            $fecha = $reserva->fecha;
+            $fecha->pax += $reserva->comensales;
+            $fecha->save();
+        }
         $reserva->delete();
         return response()->json(null, 204);
     }
@@ -128,5 +171,28 @@ class ReservaController extends Controller
     public function reservasFecha(int $fecha_id) {
         return ReservaResource::collection(Reserva::where('fecha_id', $fecha_id)->get());
     }
+
+    public function estadoReserva(Fecha $fecha, int $comensales)
+    {
+        if($fecha->pax >= $comensales) {
+            return 'aceptada';
+        }
+        if($fecha->pax + $fecha->overbooking >= $comensales) {
+            return 'aceptada en overbooking';
+        }
+        if($fecha->pax_espera > 0) {
+            return 'en espera';
+        }
+        return 'denegada';
+    }
+
+    public function verify(String $token) {
+        $reserva = Reserva::where('localizador', $token)->first();
+        $reserva->verify = true;
+        $reserva->save();
+        return true;
+    }
+
+
 
 }
