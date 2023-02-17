@@ -26,6 +26,8 @@ class ReservaResource extends JsonResource
             'observaciones' => $this->observaciones,
             'localizador' => $this->localizador,
             'confirmada' => $this->confirmada,
+            'en_espera' => $this->en_espera,
+            'verify' => $this->verify,
             'alergenos' => $alergenos,
             'fecha'=> $fecha,
         ];

@@ -22,7 +22,7 @@ add('writable_dirs', []);
 
 // Hosts
 // De momento se debe cambiar el host con el DNS del servidor PHP cada vez que éste cambie
-host('ec2-34-204-61-212.compute-1.amazonaws.com')
+host('ec2-52-3-253-247.compute-1.amazonaws.com')
     ->user('api_dev')
     ->identityFile('~/.ssh/id_rsa.pub')
     ->set('deploy_path', '/var/www/assaig-api/html');
