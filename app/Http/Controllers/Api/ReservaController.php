@@ -6,10 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ReservaStoreRequest;
 use App\Http\Requests\ReservaUpdateRequest;
 use App\Http\Resources\ReservaResource;
+use App\Mail\VerificationMail;
 use App\Models\Fecha;
 use App\Models\Reserva;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 class ReservaController extends Controller
@@ -70,6 +72,9 @@ class ReservaController extends Controller
         foreach ($request->alergenos as $alergeno) {
             $reserva->alergeno_reservas()->attach(intval($alergeno));
         }
+
+        Mail::to($request->email)->send(new VerificationMail($reserva->localizador));
+
         return response()->json(new ReservaResource($reserva), 201);
     }
 
