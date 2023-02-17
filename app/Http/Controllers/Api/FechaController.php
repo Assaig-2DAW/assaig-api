@@ -89,6 +89,8 @@ class FechaController extends Controller
         $fechaUpdate->horario_cierre = $request->horario_cierre ?? $fecha->horario_cierre;
         //$fechaUpdate->user_id =  Auth::id();
         $fechaUpdate->save();
+        $fechaUpdate->profesor_fecha_salas()->dettach();
+        $fechaUpdate->profesor_fecha_cocinas()->dettach();
         if($request->profesores_sala) {
             foreach ($request->profesores_sala as $profesor) {
                 $fechaUpdate->profesor_fecha_salas()->attach(intval($profesor));
