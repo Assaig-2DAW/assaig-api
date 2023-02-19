@@ -34,5 +34,6 @@ Route::get('reservas-pendientes', [ReservaController::class, 'reservasPendientes
 Route::get('reservas-fecha/{fecha_id}', [ReservaController::class, 'reservasFecha']);
 Route::get('fechas-profesor/{id}', [ProfesorController::class, 'fechasProfesor']);
 Route::get('verify-email/{token}', [ReservaController::class, 'verify']);
+Route::get('reservas-en-espera/{fecha_id}', [ReservaController::class, 'obtenerReservasEspera']);
 
 
