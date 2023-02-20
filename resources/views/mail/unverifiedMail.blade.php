@@ -5,10 +5,12 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <link href="../css/app.css" rel="stylesheet">
+
+    <title>L'Assaig</title>
 </head>
-<body>
-<h1>Sólo falta un paso!</h1>
-<p>Por favor accede al siguiente <a href="http://assaig.api/api/verify-email/{{$localizador}}">enlace</a> para verificar el email</p>
+<body style="padding: 2em">
+<h1 style="color: red; ">Reserva borrada</h1>
+<p>Lo sentimos pero su reserva para la fecha <strong>{{$fecha->fecha}}</strong> no se ha guardado ya que no ha verificado su email</p>
 </body>
 </html>

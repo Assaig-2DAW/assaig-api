@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Events\BorrarReservaEvent;
+use App\Listeners\BorrarReservaListener;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -18,7 +20,12 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        BorrarReservaEvent::class => [
+            BorrarReservaListener::class,
+        ]
     ];
+
+
 
     /**
      * Register any events for your application.

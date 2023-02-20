@@ -2,13 +2,19 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\BorrarReservaEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ReservaStoreRequest;
 use App\Http\Requests\ReservaUpdateRequest;
 use App\Http\Resources\ReservaResource;
+use App\Jobs\ComprobarVerificacionMailProcess;
+use App\Mail\ReservaDetallesMail;
+use App\Mail\UnverifiedMail;
 use App\Mail\VerificationMail;
 use App\Models\Fecha;
 use App\Models\Reserva;
+use App\Models\Suscriptor;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -68,12 +74,22 @@ class ReservaController extends Controller
             case 'denegada':
                 return response("No hay espacio para guardar la reserva");
         }
+        if(isset($request->subscriptor)) {
+            $subscriptor = new Suscriptor();
+            $subscriptor->nombre = $request->nombre;
+            $subscriptor->email = $request->email;
+            $subscriptor->cancelado = false;
+            $subscriptor->fecha_baja = Carbon::now()->addYear();
+            $subscriptor->save();
+        }
         $reserva->save();
         foreach ($request->alergenos as $alergeno) {
             $reserva->alergeno_reservas()->attach(intval($alergeno));
         }
 
         Mail::to($request->email)->send(new VerificationMail($reserva->localizador));
+
+        dispatch((new ComprobarVerificacionMailProcess($reserva->id))->delay(now()->addMinute()));
 
         return response()->json(new ReservaResource($reserva), 201);
     }
@@ -191,11 +207,32 @@ class ReservaController extends Controller
         return 'denegada';
     }
 
-    public function verify(String $token) {
+    public function verify($token) {
         $reserva = Reserva::where('localizador', $token)->first();
         $reserva->verify = true;
         $reserva->save();
+        $fecha = $reserva->fecha;
+        $alergenos = $reserva->alergeno_reservas;
+        Mail::to($reserva->email)->send(new ReservaDetallesMail($reserva, $fecha, $alergenos));
+        return view('verificateMail', compact('reserva', 'fecha', 'alergenos'));
+    }
+
+    public function comprobarVerificado($reserva_id) {
+        $reserva = Reserva::findOrFail($reserva_id);
+        $fecha = $reserva->fecha;
+        if(!$reserva->verify) {
+            $this->destroy($reserva);
+            Mail::to($reserva->email)->send(new UnverifiedMail($fecha));
+            return false;
+        }
         return true;
+    }
+
+    public function obtenerReservasEspera($fecha_id)
+    {
+        $reservas = Reserva::where('fecha_id', $fecha_id)
+            ->where('en_espera', 1)->get();
+        return ReservaResource::collection($reservas);
     }
 
 
