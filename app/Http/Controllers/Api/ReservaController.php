@@ -214,7 +214,7 @@ class ReservaController extends Controller
         if(!$reserva->verify) {
             $reserva->verify = true;
             $reserva->save();
-            Mail::to($reserva->email)->send(new ReservaDetallesMail($reserva, $fecha, $alergenos));
+            //Mail::to($reserva->email)->send(new ReservaDetallesMail($reserva, $fecha, $alergenos));
         }
         return view('verificateMail', compact('reserva', 'fecha', 'alergenos'));
     }
@@ -224,7 +224,7 @@ class ReservaController extends Controller
         $fecha = $reserva->fecha;
         if(!$reserva->verify) {
             $this->destroy($reserva);
-            Mail::to($reserva->email)->send(new UnverifiedMail($fecha));
+            //Mail::to($reserva->email)->send(new UnverifiedMail($fecha));
             return false;
         }
         return true;
