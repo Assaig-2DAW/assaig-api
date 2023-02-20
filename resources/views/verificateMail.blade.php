@@ -33,7 +33,7 @@
         <img src="/var/www/assaig-api/html/current/public/images/{{$fecha->menu}}" alt="{{$fecha->fecha}}" />
     @else
         <h2>Menú para el día <strong>{{$fecha->fecha}} sin definir</strong></h2>
-        <p>Cuando esté el menú se le enviará un email</p>
+        <p>Cuando esté el menú se le enviará ucdn email</p>
     @endif
 </div>
 </body>

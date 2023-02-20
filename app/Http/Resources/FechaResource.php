@@ -31,6 +31,7 @@ class FechaResource extends JsonResource
             'horario_apertura'=>$this->horario_apertura,
             'horario_cierre'=>$this->horario_cierre,
             //'user'=>$user,
+            'menu'=> $this->menu,
             'profesores_cocina'=>$profesores_cocina,
             'profesores_sala'=>$profesores_sala,
 
