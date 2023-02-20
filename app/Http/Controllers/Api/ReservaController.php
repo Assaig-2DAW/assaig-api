@@ -87,9 +87,9 @@ class ReservaController extends Controller
             $reserva->alergeno_reservas()->attach(intval($alergeno));
         }
 
-        Mail::to($request->email)->send(new VerificationMail($reserva->localizador));
+        //Mail::to($request->email)->send(new VerificationMail($reserva->localizador));
 
-        dispatch((new ComprobarVerificacionMailProcess($reserva->id))->delay(now()->addMinute()));
+        //dispatch((new ComprobarVerificacionMailProcess($reserva->id))->delay(now()->addMinute()));
 
         return response()->json(new ReservaResource($reserva), 201);
     }
@@ -209,11 +209,13 @@ class ReservaController extends Controller
 
     public function verify($token) {
         $reserva = Reserva::where('localizador', $token)->first();
-        $reserva->verify = true;
-        $reserva->save();
         $fecha = $reserva->fecha;
         $alergenos = $reserva->alergeno_reservas;
-        Mail::to($reserva->email)->send(new ReservaDetallesMail($reserva, $fecha, $alergenos));
+        if(!$reserva->verify) {
+            $reserva->verify = true;
+            $reserva->save();
+            Mail::to($reserva->email)->send(new ReservaDetallesMail($reserva, $fecha, $alergenos));
+        }
         return view('verificateMail', compact('reserva', 'fecha', 'alergenos'));
     }
 
