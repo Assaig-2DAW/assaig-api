@@ -129,7 +129,7 @@ class FechaController extends Controller
         $fecha = Fecha::findOrFail($request->id);
         $file = $request->file('menu');
         $nombre =  $fecha->fecha . '.' . $file->getClientOriginalExtension();
-        $file->move(public_path('images'), $nombre);
+        $file->storeAs('public/img', $nombre);
         $fecha->menu = $nombre;
         $fecha->save();
         return response()->json(['message' => 'Menú añadido con éxito'], 201);
