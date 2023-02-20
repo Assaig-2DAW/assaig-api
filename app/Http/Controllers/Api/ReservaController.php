@@ -237,6 +237,4 @@ class ReservaController extends Controller
         return ReservaResource::collection($reservas);
     }
 
-
-
 }

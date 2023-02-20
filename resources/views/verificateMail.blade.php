@@ -29,7 +29,7 @@
 <div style="padding: 3em">
     @if($fecha->menu)
         <h2>Menú para el día <strong>{{$fecha->fecha}}</strong></h2>
-        <img src="./../../public/images/{{$fecha->menu}}" alt="{{$fecha->fecha}}" />
+        <img src="/images/{{$fecha->menu}}" alt="{{$fecha->fecha}}" />
     @else
         <h2>Menú para el día <strong>{{$fecha->fecha}} sin definir</strong></h2>
         <p>Cuando esté el menú se le enviará un email</p>
