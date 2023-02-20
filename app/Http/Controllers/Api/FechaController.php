@@ -41,6 +41,9 @@ class FechaController extends Controller
         $fecha->pax_espera = $request->pax_espera;
         $fecha->horario_apertura = $request->horario_apertura;
         $fecha->horario_cierre = $request->horario_cierre;
+        if($request->file('menu') !== null) {
+            $fecha->menu = $request->file('menu');
+        }
         //$fecha->user_id =  1;
         $fecha->save();
 
@@ -114,5 +117,21 @@ class FechaController extends Controller
     {
         $fecha->delete();
         return response()->json(null, 204);
+    }
+
+    public function addMenu(Request $request)
+    {
+        $request->validate([
+            'menu' => 'required|image|mimes:jpeg,png,jpg',
+            'id' => 'required|integer',
+        ]);
+        //dd($request->file('menu'));
+        $fecha = Fecha::findOrFail($request->id);
+        $file = $request->file('menu');
+        $nombre =  $fecha->fecha . '.' . $file->getClientOriginalExtension();
+        $file->storeAs('public/img', $nombre);
+        $fecha->menu = $nombre;
+        $fecha->save();
+        return response()->json(['message' => 'Menú añadido con éxito'], 204);
     }
 }

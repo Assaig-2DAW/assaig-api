@@ -209,11 +209,13 @@ class ReservaController extends Controller
 
     public function verify($token) {
         $reserva = Reserva::where('localizador', $token)->first();
-        $reserva->verify = true;
-        $reserva->save();
         $fecha = $reserva->fecha;
         $alergenos = $reserva->alergeno_reservas;
-        Mail::to($reserva->email)->send(new ReservaDetallesMail($reserva, $fecha, $alergenos));
+        if(!$reserva->verify) {
+            $reserva->verify = true;
+            $reserva->save();
+            Mail::to($reserva->email)->send(new ReservaDetallesMail($reserva, $fecha, $alergenos));
+        }
         return view('verificateMail', compact('reserva', 'fecha', 'alergenos'));
     }
 
