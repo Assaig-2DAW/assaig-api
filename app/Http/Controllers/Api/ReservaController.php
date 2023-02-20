@@ -87,9 +87,9 @@ class ReservaController extends Controller
             $reserva->alergeno_reservas()->attach(intval($alergeno));
         }
 
-        Mail::to($request->email)->send(new VerificationMail($reserva->localizador));
+        //Mail::to($request->email)->send(new VerificationMail($reserva->localizador));
 
-        dispatch((new ComprobarVerificacionMailProcess($reserva->id))->delay(now()->addMinute()));
+        //dispatch((new ComprobarVerificacionMailProcess($reserva->id))->delay(now()->addMinute()));
 
         return response()->json(new ReservaResource($reserva), 201);
     }
