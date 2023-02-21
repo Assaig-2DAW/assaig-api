@@ -20,12 +20,47 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
+/**
+ * @OA\Info(
+ *    title="Assaig API",
+ *    version="1.0.0",
+ * )
+ */
 class ReservaController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     */
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    /**
+     * @OA\Get (
+     * path="/api/reservas",
+     * summary="Get all reservas",
+     * description="Obtienes todas las reservas de la BBDD",
+     * operationId="getReservas",
+     * tags={"reservas"},
+     * @OA\Response(
+     *    response=400,
+     *    description="Not found",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="message", type="string", example="Sorry, not reservas found")
+     *        )
+     *     )
+     * ),
+     * @OA\Response(
+     *     response=201,
+     *     description="Success",
+     *     @OA\JsonContent(
+     *        @OA\Property(property="reservas", type="object", ref="app/Http/Resources/ReservaResource"),
+     *     )
+     *  ),
      */
     public function index()
     {
