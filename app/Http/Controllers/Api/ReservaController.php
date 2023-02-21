@@ -20,12 +20,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
-/**
- * @OA\Info(
- *    title="Assaig API",
- *    version="1.0.0",
- * )
- */
+
 class ReservaController extends Controller
 {
     /**
@@ -55,7 +50,7 @@ class ReservaController extends Controller
      *     )
      * ),
      * @OA\Response(
-     *     response=201,
+     *     response=200,
      *     description="Success",
      *     @OA\JsonContent(
      *        @OA\Property(property="reservas", type="object", ref="app/Http/Resources/ReservaResource"),
@@ -71,7 +66,56 @@ class ReservaController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+
+     */
+
+    /**
+     * Display a listing of the resource.
+     *
      * @return \Illuminate\Http\JsonResponse
+     */
+
+    /**
+     * Save the resource in the Data Base.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    /**
+     * @OA\Post (
+     * path="/api/reservas/",
+     * summary="Post reserva Object",
+     * description="Publicas una reserva  BBDD",
+     * operationId="PostReservas",
+     * tags={"reservas"},
+     * @OA\RequestBody(
+     *    required=true,
+     *    description="Credenciales para generar la reserva",
+     *    @OA\JsonContent(
+     *       required={"email","password"},
+     *          @OA\Property(property="nombre", type="string", format="name with min:3 and max:50", example="Juan Palomo"),
+     *          @OA\Property(property="email", type="string", format="email", example="user1@mail.com"),
+     *          @OA\Property(property="telefono", type="numeric", format="numeric digits: 9", example="6660283624"),
+     *          @OA\Property(property="comensales", type="numeric", format="numeric min:1", example="2"),
+     *          @OA\Property(property="observaciones", type="string", example="Puede ser que llegemos con algo de retraso"),
+     *          @OA\Property(property="alergenos", type="object", format="Array con id de los alergenos", example="[1, 2, 5]"),
+     *          @OA\Property(property="fecha_id", type="numeric", format="numeric", example="5"),
+     *    ),
+     * ),
+     * @OA\Response(
+     *    response=400,
+     *    description="Not found",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="message", type="string", example="Sorry, not reservas found")
+     *        )
+     *     )
+     * ),
+     * @OA\Response(
+     *     response=201,
+     *     description="Success",
+     *     @OA\JsonContent(
+     *          @OA\Property(property="reservas", type="object", ref="app/Http/Resources/ReservaResource"),
+     *     )
+     *  ),
      */
     public function store(ReservaStoreRequest $request)
     {
@@ -130,10 +174,38 @@ class ReservaController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display a resource.
      *
-     * @param  \App\Models\Reserva  $reserva
-     * @return ReservaResource
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     */
+
+    /**
+     * Display a resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    /**
+     * @OA\Get (
+     * path="/api/reservas/{id}",
+     * summary="Get a reserva",
+     * description="Obtienes la reserva de la BBDD en base a la {id} enviada en la url",
+     * operationId="getReserva",
+     * tags={"reservas"},
+     * @OA\Response(
+     *    response=400,
+     *    description="Not found",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="message", type="string", example="Sorry, not reservas found")
+     *        )
+     *     )
+     * ),
+     * @OA\Response(
+     *     response=202,
+     *     description="Success",
+     *     @OA\JsonContent(
+     *        @OA\Property(property="reserva", type="object", ref="app/Http/Resources/ReservaResource"),
+     *     )
+     *  ),
      */
     public function show(Reserva $reserva)
     {
@@ -143,7 +215,6 @@ class ReservaController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Reserva  $reserva
      * @return \Illuminate\Http\JsonResponse
      */
