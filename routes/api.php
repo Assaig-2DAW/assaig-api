@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ReservaController;
 use App\Http\Controllers\Api\ProfesorController;
 use App\Http\Controllers\Api\FechaController;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Response;
 
 
 /*
@@ -36,3 +38,17 @@ Route::get('fechas-profesor/{id}', [ProfesorController::class, 'fechasProfesor']
 Route::get('verify-email/{token}', [ReservaController::class, 'verify']);
 Route::get('reservas-en-espera/{fecha_id}', [ReservaController::class, 'obtenerReservasEspera']);
 Route::post('fecha/add-menu', [FechaController::class, 'addMenu']);
+Route::get('/images/{filename}', function ($filename) {
+    $path = public_path('images/' . $filename);
+    if (!File::exists($path)) {
+        return response()->json(['message' => 'Imagen no encontrada.'], 404);
+    }
+
+    $file = File::get($path);
+    $type = File::mimeType($path);
+
+    $response = Response::make($file, 200);
+    $response->header("Content-Type", $type);
+
+    return $response;
+});
