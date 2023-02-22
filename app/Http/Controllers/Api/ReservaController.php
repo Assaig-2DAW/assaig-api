@@ -162,9 +162,12 @@ class ReservaController extends Controller
             $subscriptor->save();
         }
         $reserva->save();
-        foreach ($request->alergenos as $alergeno) {
-            $reserva->alergeno_reservas()->attach(intval($alergeno));
+        if($request->alergenos) {
+            foreach ($request->alergenos as $alergeno) {
+                $reserva->alergeno_reservas()->attach(intval($alergeno));
+            }
         }
+
 
         //Mail::to($request->email)->send(new VerificationMail($reserva->localizador));
 
@@ -360,13 +363,50 @@ class ReservaController extends Controller
     public function destroy(Reserva $reserva)
     {
         $reserva = Reserva::findOrFail($reserva->id);
+        $fecha = Fecha::findOrFail($reserva->fecha_id);
         if(!$reserva->en_espera) {
-            $fecha = $reserva->fecha;
-            $fecha->pax += $reserva->comensales;
+            $fecha->pax = $reserva->comensales + $fecha->pax;
+            //dd($fecha);
             $fecha->save();
+            $this->actualizarListaEspera($fecha);
         }
         $reserva->delete();
         return response()->json(null, 204);
+    }
+
+    function actualizarListaEspera($fecha)
+    {
+        $reservas_espera = Reserva::where('fecha_id', $fecha->id)
+            ->where('en_espera', 1)->get();;
+        //dd($reservas_espera);
+        $fecha = Fecha::findOrFail($fecha->id);
+        //dd($fecha);
+        foreach ($reservas_espera as $reserva) {
+            //dd($this->estadoReserva($fecha, $reserva->comensales));
+            switch ($this->estadoReserva($fecha, $reserva->comensales)) {
+                case 'aceptada':
+                    $reserva->confirmada = true;
+                    $reserva->en_espera = false;
+                    $fecha->pax = $fecha->pax - $reserva->comensales;
+                    $fecha->pax_espera = $fecha->pax_espera + 1;
+                    //dd($fecha);
+                    $fecha->save();
+                    //dd($reserva);
+                    $reserva->save();
+                    break;
+                case 'aceptada en overbooking':
+                    $reserva->confirmada = true;
+                    $reserva->en_espera = false;
+                    $fecha->overbooking = $fecha->pax + $fecha->overbooking - $reserva->comensales;
+                    $fecha->pax = 0;
+                    $fecha->save();
+                    $reserva->save();
+                    break;
+                case 'en espera':
+                case 'denegada':
+            }
+        }
+
     }
 
     public function confirmar(int $id) {

@@ -39,7 +39,7 @@ class FechaFactory extends Factory
             'fecha' => $this->getNextFriday(),
             'pax' => 15,
             'overbooking' => 5,
-            'pax_espera' => 0,
+            'pax_espera' => 3,
             'horario_apertura' => $openTime,
             'horario_cierre' => $closeTime,
             //'user_id' => User::inRandomOrder()->first()->id,

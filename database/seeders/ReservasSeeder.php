@@ -19,6 +19,7 @@ class ReservasSeeder extends Seeder
      */
     public function run()
     {
+        /*
         $fechas = Fecha::all();
         $fechas->each(function($fecha) {
             Reserva::factory()->count(2)->create([
@@ -32,5 +33,6 @@ class ReservasSeeder extends Seeder
                 $reserva->alergeno_reservas()->attach($i);
             }
         }
+        */
     }
 }
