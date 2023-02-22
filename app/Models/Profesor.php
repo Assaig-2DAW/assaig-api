@@ -4,7 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+/**
+ *
+ * @OA\Schema(
+ * required={"request"},
+ * @OA\Xml(name="Profesor"),
+ * @OA\Property(property="id", type="integer", readOnly="true", example="1"),
+ * @OA\Property(property="nombre", type="string", readOnly="true", description="Natalia Canto"),
+ * @OA\Property(property="tipo", type="string", readOnly="true", description="Tipo de Profesor que es, puede ser o Cocina o Sala", example="Sala"),
+ * )
+ *
+ * Class Profesor
+ *
+ */
 class Profesor extends Model
 {
     use HasFactory;

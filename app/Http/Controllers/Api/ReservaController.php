@@ -86,12 +86,12 @@ class ReservaController extends Controller
      * summary="Post reserva Object",
      * description="Publicas una reserva  BBDD",
      * operationId="PostReservas",
-     * tags={"reservas"},
+     * tags={"reserva"},
      * @OA\RequestBody(
      *    required=true,
      *    description="Credenciales para generar la reserva",
      *    @OA\JsonContent(
-     *       required={"email","password"},
+     *       required={"nombre","email", "telefono", "comensales", "fecha_id"},
      *          @OA\Property(property="nombre", type="string", format="name with min:3 and max:50", example="Juan Palomo"),
      *          @OA\Property(property="email", type="string", format="email", example="user1@mail.com"),
      *          @OA\Property(property="telefono", type="numeric", format="numeric digits: 9", example="6660283624"),
@@ -186,11 +186,11 @@ class ReservaController extends Controller
      */
     /**
      * @OA\Get (
-     * path="/api/reservas/{id}",
+     * path="/api/reservas/1",
      * summary="Get a reserva",
      * description="Obtienes la reserva de la BBDD en base a la {id} enviada en la url",
      * operationId="getReserva",
-     * tags={"reservas"},
+     * tags={"reserva"},
      * @OA\Response(
      *    response=400,
      *    description="Not found",
@@ -217,6 +217,52 @@ class ReservaController extends Controller
      *
      * @param  \App\Models\Reserva  $reserva
      * @return \Illuminate\Http\JsonResponse
+     */
+
+    /**
+
+     * @return \Illuminate\Http\JsonResponse
+     */
+
+    /**
+     * Display a listing of the resource.
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Reserva  $reserva
+     * @return \Illuminate\Http\Response
+     */
+    /**
+     * @OA\Put (
+     * path="/api/reservas/1",
+     * summary="Update the object reservas indicated by the param $reserva",
+     * description="Actualiza el objeto reserva en base al objeto $reserva pasado, primero busca si el objeto esta en la base de datos y si esta, la actualiza",
+     * operationId="Update Reservas",
+     * tags={"reserva"},
+     * @OA\Parameter(
+     *   parameter="Reserva $reserva",
+     *   name="$reserva",
+     *   description="Reserva to update",
+     *   @OA\Schema(
+     *     type="object"
+     *   ),
+     *   in="query",
+     *   required=true
+     * ),
+     * @OA\Response(
+     *    response=400,
+     *    description="Not found",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="message", type="string", example="Sorry, not reservas found")
+     *        )
+     *     )
+     * ),
+     * @OA\Response(
+     *     response=206,
+     *     description="Success",
+     *     @OA\JsonContent(
+     *        @OA\Property(property="reservas", type="object", ref="app/Http/Resources/ReservaResource"),
+     *     )
+     *  ),
      */
     public function update(ReservaUpdateRequest $request, Reserva $reserva)
     {
@@ -267,10 +313,49 @@ class ReservaController extends Controller
     }
 
     /**
+
+     * @return \Illuminate\Http\JsonResponse
+     */
+
+    /**
+     * Display a listing of the resource.
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Reserva  $reserva
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\Response
+     */
+    /**
+     * @OA\Delete (
+     * path="/api/reservas/1",
+     * summary="Delete the object reservas object indicated by the param {id}",
+     * description="Delete the reserva object recived by the Param $reserva, first find it and aafter find it it delets",
+     * operationId="Delete Reservas",
+     * tags={"reserva"},
+     * @OA\Parameter(
+     *   parameter="Reserva $reserva",
+     *   name="$reserva",
+     *   description="Reserva to destroy",
+     *   @OA\Schema(
+     *     type="object"
+     *   ),
+     *   in="query",
+     *   required=true
+     * ),
+     * @OA\Response(
+     *    response=400,
+     *    description="Not found",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="message", type="string", example="Sorry, not reservas found")
+     *        )
+     *     )
+     * ),
+     * @OA\Response(
+     *     response=204,
+     *     description="Success",
+     *     @OA\JsonContent(
+     *        @OA\Property(property="reservas", type="object", ref="app/Http/Resources/ReservaResource"),
+     *     )
+     *  ),
      */
     public function destroy(Reserva $reserva)
     {
@@ -290,11 +375,77 @@ class ReservaController extends Controller
         $reserva->save();
         return true;
     }
+    /**
+     * Display a resource.
+     *
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     */
 
+    /**
+     * Display a resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    /**
+     * @OA\Get (
+     * path="/api/reservas-pendientes",
+     * summary="Get a reservas which are unconfirmed",
+     * description="Obtienes la reserva de la BBDD que estan pendientes",
+     * operationId="getReservaPendiente",
+     * tags={"reservas-pendientes"},
+     * @OA\Response(
+     *    response=400,
+     *    description="Not found",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="message", type="string", example="Sorry, not reservas found")
+     *        )
+     *     )
+     * ),
+     * @OA\Response(
+     *     response=207,
+     *     description="Success",
+     *     @OA\JsonContent(
+     *        @OA\Property(property="reservas", type="object", ref="app/Http/Resources/ReservaResource"),
+     *     )
+     *  ),
+     */
     public function reservasPendientes() {
         return ReservaResource::collection(Reserva::where('confirmada', '0')->get());
     }
+    /**
+     * Display a resource.
+     *
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     */
 
+    /**
+     * Display a resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    /**
+     * @OA\Get (
+     * path="/api/reservas-fecha/1",
+     * summary="Get all reservas within a date",
+     * description="Obtienes la reserva de la BBDD que estan en la fecha que se ha pasado",
+     * operationId="getReservasFecha",
+     * tags={"reservas-fecha"},
+     * @OA\Response(
+     *    response=400,
+     *    description="Not found",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="message", type="string", example="Sorry, not reservas found")
+     *        )
+     *     )
+     * ),
+     * @OA\Response(
+     *     response=208,
+     *     description="Success",
+     *     @OA\JsonContent(
+     *        @OA\Property(property="reservas", type="object", ref="app/Http/Resources/ReservaResource"),
+     *     )
+     *  ),
+     */
     public function reservasFecha(int $fecha_id) {
         return ReservaResource::collection(Reserva::where('fecha_id', $fecha_id)->get());
     }
@@ -335,7 +486,40 @@ class ReservaController extends Controller
         }
         return true;
     }
+    /**
+     * Display a resource.
+     *
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     */
 
+    /**
+     * Display a resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    /**
+     * @OA\Get (
+     * path="reservas-en-espera/1",
+     * summary="Get a reservas within which are in state of waiting",
+     * description="Obtienes la reserva de la BBDD que estan en espera",
+     * operationId="getReservaEspera",
+     * tags={"reservas-fecha"},
+     * @OA\Response(
+     *    response=400,
+     *    description="Not found",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="message", type="string", example="Sorry, not reservas found")
+     *        )
+     *     )
+     * ),
+     * @OA\Response(
+     *     response=210,
+     *     description="Success",
+     *     @OA\JsonContent(
+     *        @OA\Property(property="reservas", type="object", ref="app/Http/Resources/ReservaResource"),
+     *     )
+     *  ),
+     */
     public function obtenerReservasEspera($fecha_id)
     {
         $reservas = Reserva::where('fecha_id', $fecha_id)
